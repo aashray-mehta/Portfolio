@@ -9,9 +9,9 @@ export type Project = {
 export const projects: Project[] = [
   {
     name: 'What The Hell Should I Watch',
-    description: 'TV and movie recommendations based on your mood.',
-    url: 'https://watch.aashraymehta.com',
-    tags: ['Astro', 'AI'],
+    description: 'A fast, personality-driven movie decision engine. Take a quick quiz or hit random — stop scrolling, get a movie, press play.',
+    url: 'https://www.whatthehellshouldiwatch.com',
+    tags: ['Next.js', 'TypeScript', 'TMDB API'],
     status: 'live',
   },
 ]
