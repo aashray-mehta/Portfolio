@@ -1,0 +1,5 @@
+# Keep Sitemap URL in sync with site in astro.config.mjs when changing domain
+User-agent: *
+Allow: /
+
+Sitemap: https://aashraymehta.com/sitemap-index.xml
