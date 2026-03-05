@@ -6,8 +6,8 @@ import '../styles/global.css'
 
 const site = Astro.site?.href ?? 'https://aashraymehta.com'
 const canonical = new URL(Astro.url.pathname, site).href
-const title = 'Aashray Mehta'
-const description = 'Portfolio of Aashray Mehta — Solutions Architect building AI tools, apps, and internet experiments.'
+const title = 'Aashray Mehta — Public Registry'
+const description = 'Public registry of small software incidents. Access granted for review purposes only.'
 const image = new URL('/og.png', site).href
 
 const personSchema = {
@@ -15,11 +15,9 @@ const personSchema = {
   '@type': 'Person',
   name: 'Aashray Mehta',
   url: site,
-    description: 'Solutions Architect building AI tools and apps that probably didn’t need to exist but now do.',
-  sameAs: [
-    'https://github.com/aashray-mehta',
-    'https://www.linkedin.com/in/aashray-mehta',
-  ],
+  description:
+    'Independent developer maintaining a public registry of software records, prototypes, and incidents. Some entries are withheld.',
+  sameAs: ['https://github.com/aashray-mehta', 'https://www.linkedin.com/in/aashray-mehta'],
 }
 
 const webSiteSchema = {
@@ -44,14 +42,12 @@ const webSiteSchema = {
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
 
-    <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={image} />
 
-    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
@@ -64,49 +60,64 @@ const webSiteSchema = {
 
     <style>
       .idea-checkbox:checked {
-        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 14 14' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 4L5.5 9.5L3 7' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 14 14' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 4L5.5 9.5L3 7' stroke='%23e8e4dc' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
         background-size: 100% 100%;
         background-position: center;
         background-repeat: no-repeat;
       }
     </style>
   </head>
+
   <body>
     <main class="mx-auto max-w-2xl px-6 pb-20 pt-20">
-      <Header />
+      <div class="animate-in">
+        <Header />
+      </div>
 
-      <section class="mb-12">
-        <h2 class="mb-3 font-mono text-sm font-semibold uppercase tracking-widest text-neutral-500">
-          About
+      <!-- System banner -->
+      <div class="mt-4 mb-10 animate-in border border-lab-border bg-lab-surface px-3 py-2 text-[10px] uppercase tracking-[0.25em] text-lab-text-muted" style="animation-delay: 50ms">
+        Public access granted for review purposes only. Do not interpret as roadmap.
+      </div>
+
+      <section class="mb-14 animate-in" style="animation-delay: 100ms">
+        <h2 class="mb-3 text-[10px] font-semibold uppercase tracking-[0.25em] text-lab-text-muted">
+          Disclosure
         </h2>
-        <p class="text-neutral-400">
-          I’m Aashray. I spend most of my time fixing systems, breaking them slightly, and then rebuilding them better. By day I’m a Solutions Architect at Blue Frog. By night (and weekends), I build random tools and apps that probably didn’t need to exist but now do. This is my corner of the internet where those experiments live.
-        </p>
+        <div class="space-y-3 text-xs leading-relaxed text-lab-text-secondary">
+          <p>This site is a public registry of small software records.</p>
+          <p>Most entries began as “this would be easy” and ended as “now it exists.”</p>
+          <p>Nothing here is a product. Some records are active. Others are retained for historical reasons.</p>
+          <p class="text-lab-text-muted">Operator: Aashray Mehta. Liability: declined.</p>
+        </div>
       </section>
 
-      <section>
-        <h2 class="mb-6 font-mono text-sm font-semibold uppercase tracking-widest text-neutral-500">
-          Projects
-        </h2>
-        <div class="grid gap-4">
-          {projects.map((project) => (
-            <ProjectCard project={project} />
+      <section class="animate-in" style="animation-delay: 150ms">
+        <div class="mb-4 flex items-baseline justify-between">
+          <h2 class="text-[10px] font-semibold uppercase tracking-[0.25em] text-lab-text-muted">
+            Public Registry
+          </h2>
+          <span class="text-[10px] text-lab-text-muted">{projects.length} records on file</span>
+        </div>
+
+        <div class="divide-y divide-lab-border">
+          {projects.map((project, i) => (
+            <ProjectCard project={project} index={i} />
           ))}
         </div>
       </section>
     </main>
 
-    <footer class="fixed bottom-0 left-0 right-0 z-50 border-t border-neutral-800/50 bg-[#0a0a0a]/60 backdrop-blur-md">
+    <footer class="fixed bottom-0 left-0 right-0 z-50 border-t border-lab-border bg-lab-bg/80 backdrop-blur-md">
       <div class="mx-auto flex max-w-2xl items-center justify-between px-6 py-3">
-        <p class="text-xs text-neutral-600">
-          &copy; {new Date().getFullYear()} Aashray Mehta
+        <p class="text-[10px] uppercase tracking-wider text-lab-text-muted">
+          Notice: Records may be incomplete. &copy; {new Date().getFullYear()} Aashray Mehta
         </p>
         <button
           id="open-idea-modal"
           type="button"
-          class="text-xs text-neutral-500 transition-colors hover:text-neutral-300"
+          class="text-[10px] uppercase tracking-wider text-lab-text-muted transition-colors hover:text-lab-text"
         >
-          Submit an Idea &rarr;
+          [Open Intake]
         </button>
       </div>
     </footer>
@@ -115,101 +126,107 @@ const webSiteSchema = {
       id="idea-overlay"
       class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/60 backdrop-blur-sm"
     >
-    <div
-      id="idea-modal"
-      class="relative z-[101] w-full max-w-md rounded-lg border border-neutral-800 bg-neutral-900 p-0 text-neutral-300 shadow-2xl"
-    >
-      <div class="p-6">
-        <div class="mb-5 flex items-center justify-between">
-          <h3 class="font-mono text-sm font-semibold uppercase tracking-widest text-neutral-400">
-            Submit an Idea
-          </h3>
-          <button
-            id="close-idea-modal"
-            type="button"
-            class="text-neutral-600 transition-colors hover:text-neutral-300"
-            aria-label="Close"
-          >
-            &#x2715;
-          </button>
-        </div>
-
-        <form id="idea-form" class="space-y-4">
-          <input type="hidden" name="access_key" value="bf4d24d7-89e7-4b0a-a480-12505ce98400" />
-          <input type="hidden" name="subject" value="New Idea Submission — aashraymehta.com" />
-          <input type="hidden" name="from_name" value="Portfolio Idea Form" />
-
-          <div>
-            <label for="idea-name" class="mb-1 block text-xs text-neutral-500">Name</label>
-            <input
-              id="idea-name"
-              name="name"
-              type="text"
-              required
-              class="w-full rounded border border-neutral-700 bg-neutral-800 px-3 py-2 text-sm text-neutral-200 placeholder-neutral-600 outline-none transition-colors focus:border-neutral-500"
-              placeholder="Your name"
-            />
+      <div
+        id="idea-modal"
+        class="relative z-[101] w-full max-w-md border border-lab-border bg-lab-surface p-0 text-lab-text shadow-2xl"
+      >
+        <div class="p-6">
+          <div class="mb-5 flex items-center justify-between">
+            <h3 class="text-[10px] font-semibold uppercase tracking-[0.25em] text-lab-text-muted">
+              Intake
+            </h3>
+            <button
+              id="close-idea-modal"
+              type="button"
+              class="text-lab-text-muted transition-colors hover:text-lab-text"
+              aria-label="Close"
+            >
+              &#x2715;
+            </button>
           </div>
 
-          <div>
-            <label for="idea-email" class="mb-1 block text-xs text-neutral-500">Email</label>
-            <input
-              id="idea-email"
-              name="email"
-              type="email"
-              required
-              class="w-full rounded border border-neutral-700 bg-neutral-800 px-3 py-2 text-sm text-neutral-200 placeholder-neutral-600 outline-none transition-colors focus:border-neutral-500"
-              placeholder="you@example.com"
-            />
+          <form id="idea-form" class="space-y-4">
+            <input type="hidden" name="access_key" value="bf4d24d7-89e7-4b0a-a480-12505ce98400" />
+            <input type="hidden" name="subject" value="[INTAKE] New request recorded — aashraymehta.com" />
+            <input type="hidden" name="from_name" value="Intake System" />
+
+            <div>
+              <label for="idea-name" class="mb-1 block text-[10px] uppercase tracking-wider text-lab-text-muted">
+                Name
+              </label>
+              <input
+                id="idea-name"
+                name="name"
+                type="text"
+                required
+                class="w-full border border-lab-border bg-lab-bg px-3 py-2 text-xs text-lab-text placeholder-lab-text-muted outline-none transition-colors focus:border-lab-border-light"
+                placeholder="Required for attribution disputes"
+              />
+            </div>
+
+            <div>
+              <label for="idea-email" class="mb-1 block text-[10px] uppercase tracking-wider text-lab-text-muted">
+                Email
+              </label>
+              <input
+                id="idea-email"
+                name="email"
+                type="email"
+                required
+                class="w-full border border-lab-border bg-lab-bg px-3 py-2 text-xs text-lab-text placeholder-lab-text-muted outline-none transition-colors focus:border-lab-border-light"
+                placeholder="Required for non-response"
+              />
+            </div>
+
+            <div>
+              <label for="idea-description" class="mb-1 block text-[10px] uppercase tracking-wider text-lab-text-muted">
+                Request
+              </label>
+              <textarea
+                id="idea-description"
+                name="idea"
+                required
+                rows="6"
+                class="w-full resize-none border border-lab-border bg-lab-bg px-3 py-2 text-xs text-lab-text placeholder-lab-text-muted outline-none transition-colors focus:border-lab-border-light"
+                placeholder="Describe the request. Provide just enough detail to regret it."
+              ></textarea>
+            </div>
+
+            <div class="flex items-start gap-2">
+              <input
+                id="idea-certified"
+                name="certified"
+                type="checkbox"
+                required
+                class="idea-checkbox mt-0.5 h-3.5 w-3.5 shrink-0 cursor-pointer appearance-none border border-lab-border bg-lab-bg checked:border-lab-text-muted checked:bg-lab-text-muted"
+              />
+              <label for="idea-certified" class="cursor-pointer text-[10px] leading-relaxed text-lab-text-muted">
+                I confirm this request is mine (or mine enough). I am voluntarily submitting it for potential development.
+                Credit may be granted. Compensation will not.
+              </label>
+            </div>
+
+            <div class="h-captcha" data-captcha="true" data-theme="dark"></div>
+
+            <button
+              type="submit"
+              class="w-full border border-lab-border bg-lab-bg px-4 py-2 text-xs text-lab-text-secondary transition-colors hover:border-lab-border-light hover:text-lab-text disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              Transmit
+            </button>
+          </form>
+
+          <div id="idea-success" class="hidden py-8 text-center">
+            <p class="mb-1 text-xs text-lab-text">Intake recorded.</p>
+            <p class="text-[10px] text-lab-text-muted">No reversals.</p>
           </div>
 
-          <div>
-            <label for="idea-description" class="mb-1 block text-xs text-neutral-500">The Idea</label>
-            <textarea
-              id="idea-description"
-              name="idea"
-              required
-              rows="6"
-              class="w-full resize-none rounded border border-neutral-700 bg-neutral-800 px-3 py-2 text-sm text-neutral-200 placeholder-neutral-600 outline-none transition-colors focus:border-neutral-500"
-              placeholder="Describe your half-baked idea..."
-            ></textarea>
+          <div id="idea-error" class="hidden py-8 text-center">
+            <p class="mb-1 text-xs text-status-closed">Transmission failed.</p>
+            <p class="text-[10px] text-lab-text-muted">Retry optional. Outcome unchanged.</p>
           </div>
-
-          <div class="flex items-start gap-2">
-            <input
-              id="idea-certified"
-              name="certified"
-              type="checkbox"
-              required
-              class="idea-checkbox mt-1 h-3.5 w-3.5 shrink-0 cursor-pointer appearance-none rounded-sm border border-neutral-600 bg-neutral-800 checked:border-neutral-500 checked:bg-neutral-500"
-            />
-            <label for="idea-certified" class="cursor-pointer text-xs leading-relaxed text-neutral-500">
-              I certify that this half-baked idea that I'm not gonna build is mine, and I'm 100%
-              giving it to Aashray for nothing but a name shoutout if it is built.
-            </label>
-          </div>
-
-          <div class="h-captcha" data-captcha="true" data-theme="dark"></div>
-
-          <button
-            type="submit"
-            class="w-full rounded bg-neutral-700 px-4 py-2 text-sm font-medium text-neutral-200 transition-colors hover:bg-neutral-600 disabled:cursor-not-allowed disabled:opacity-50"
-          >
-            Send It
-          </button>
-        </form>
-
-        <div id="idea-success" class="hidden py-8 text-center">
-          <p class="mb-1 text-sm text-neutral-300">Idea received.</p>
-          <p class="text-xs text-neutral-500">No take-backs.</p>
-        </div>
-
-        <div id="idea-error" class="hidden py-8 text-center">
-          <p class="mb-1 text-sm text-red-400">Something went wrong.</p>
-          <p class="text-xs text-neutral-500">Try again, or don't. Your call.</p>
         </div>
       </div>
-    </div>
     </div>
 
     <script>
@@ -250,12 +267,13 @@ const webSiteSchema = {
         e.preventDefault();
         const hCaptcha = form.querySelector<HTMLTextAreaElement>('textarea[name=h-captcha-response]');
         if (!hCaptcha || !hCaptcha.value) {
-          alert('Please complete the captcha.');
+          alert('Verification required to transmit intake.');
           return;
         }
+
         const btn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
         btn.disabled = true;
-        btn.textContent = 'Sending...';
+        btn.textContent = 'Transmitting...';
 
         try {
           const res = await fetch('https://api.web3forms.com/submit', {
@@ -275,10 +293,11 @@ const webSiteSchema = {
           errorEl.classList.remove('hidden');
         } finally {
           btn.disabled = false;
-          btn.textContent = 'Send It';
+          btn.textContent = 'Transmit';
         }
       });
     </script>
+
     <script src="https://web3forms.com/client/script.js" async defer></script>
   </body>
 </html>
