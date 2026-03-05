@@ -61,6 +61,15 @@ const webSiteSchema = {
 
     <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
     <script type="application/ld+json" set:html={JSON.stringify(webSiteSchema)} />
+
+    <style>
+      .idea-checkbox:checked {
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 14 14' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 4L5.5 9.5L3 7' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+        background-size: 100% 100%;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+    </style>
   </head>
   <body>
     <main class="mx-auto max-w-2xl px-6 pb-20 pt-20">
@@ -102,9 +111,13 @@ const webSiteSchema = {
       </div>
     </footer>
 
-    <dialog
+    <div
+      id="idea-overlay"
+      class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/60 backdrop-blur-sm"
+    >
+    <div
       id="idea-modal"
-      class="m-auto w-full max-w-md rounded-lg border border-neutral-800 bg-neutral-900 p-0 text-neutral-300 shadow-2xl backdrop:bg-black/60 backdrop:backdrop-blur-sm"
+      class="relative z-[101] w-full max-w-md rounded-lg border border-neutral-800 bg-neutral-900 p-0 text-neutral-300 shadow-2xl"
     >
       <div class="p-6">
         <div class="mb-5 flex items-center justify-between">
@@ -168,7 +181,7 @@ const webSiteSchema = {
               name="certified"
               type="checkbox"
               required
-              class="mt-1 h-3.5 w-3.5 shrink-0 cursor-pointer appearance-none rounded-sm border border-neutral-600 bg-neutral-800 checked:border-neutral-500 checked:bg-neutral-600"
+              class="idea-checkbox mt-1 h-3.5 w-3.5 shrink-0 cursor-pointer appearance-none rounded-sm border border-neutral-600 bg-neutral-800 checked:border-neutral-500 checked:bg-neutral-500"
             />
             <label for="idea-certified" class="cursor-pointer text-xs leading-relaxed text-neutral-500">
               I certify that this half-baked idea that I'm not gonna build is mine, and I'm 100%
@@ -196,28 +209,41 @@ const webSiteSchema = {
           <p class="text-xs text-neutral-500">Try again, or don't. Your call.</p>
         </div>
       </div>
-    </dialog>
+    </div>
+    </div>
 
     <script>
-      const modal = document.getElementById('idea-modal') as HTMLDialogElement;
+      const overlay = document.getElementById('idea-overlay')!;
+      const modal = document.getElementById('idea-modal')!;
       const form = document.getElementById('idea-form') as HTMLFormElement;
       const successEl = document.getElementById('idea-success')!;
       const errorEl = document.getElementById('idea-error')!;
 
-      document.getElementById('open-idea-modal')!.addEventListener('click', () => {
+      function openModal() {
         form.classList.remove('hidden');
         successEl.classList.add('hidden');
         errorEl.classList.add('hidden');
         form.reset();
-        modal.showModal();
+        overlay.classList.remove('hidden');
+        overlay.classList.add('flex');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeModal() {
+        overlay.classList.add('hidden');
+        overlay.classList.remove('flex');
+        document.body.style.overflow = '';
+      }
+
+      document.getElementById('open-idea-modal')!.addEventListener('click', openModal);
+      document.getElementById('close-idea-modal')!.addEventListener('click', closeModal);
+
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) closeModal();
       });
 
-      document.getElementById('close-idea-modal')!.addEventListener('click', () => {
-        modal.close();
-      });
-
-      modal.addEventListener('click', (e) => {
-        if (e.target === modal) modal.close();
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !overlay.classList.contains('hidden')) closeModal();
       });
 
       form.addEventListener('submit', async (e) => {
