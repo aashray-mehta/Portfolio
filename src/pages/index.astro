@@ -176,6 +176,8 @@ const webSiteSchema = {
             </label>
           </div>
 
+          <div class="h-captcha" data-captcha="true" data-theme="dark"></div>
+
           <button
             type="submit"
             class="w-full rounded bg-neutral-700 px-4 py-2 text-sm font-medium text-neutral-200 transition-colors hover:bg-neutral-600 disabled:cursor-not-allowed disabled:opacity-50"
@@ -220,6 +222,11 @@ const webSiteSchema = {
 
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
+        const hCaptcha = form.querySelector<HTMLTextAreaElement>('textarea[name=h-captcha-response]');
+        if (!hCaptcha || !hCaptcha.value) {
+          alert('Please complete the captcha.');
+          return;
+        }
         const btn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
         btn.disabled = true;
         btn.textContent = 'Sending...';
@@ -246,5 +253,6 @@ const webSiteSchema = {
         }
       });
     </script>
+    <script src="https://web3forms.com/client/script.js" async defer></script>
   </body>
 </html>
