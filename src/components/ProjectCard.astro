@@ -62,8 +62,6 @@ const delay = 200 + index * 75
   </p>
 
   <div class="mt-2 text-[10px] text-lab-text-muted">
-    {isRedacted
-      ? ' ACCESS: RESTRICTED'
-      : project.tags.join(' / ')}
+    {isRedacted ? 'ACCESS: RESTRICTED' : project.tags.join(' / ')}
   </div>
 </Tag>
